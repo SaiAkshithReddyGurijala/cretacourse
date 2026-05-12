@@ -22,8 +22,10 @@ const LoginPage = () => {
         setLoading(true);
         try {
             await login(email, password);
-            // Navigation is handled by useEffect
+            // We force navigate here so it doesn't get stuck waiting for useEffect
+            navigate('/');
         } catch (err) {
+            console.error("Login failed:", err);
             setError(err.message);
             setLoading(false);
         }

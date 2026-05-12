@@ -21,15 +21,27 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if (currentUser) {
-                // Fetch additional user data from Firestore (like role)
-                const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
-                const userData = userDoc.exists() ? userDoc.data() : {};
+                try {
+                    // Fetch additional user data from Firestore (like role)
+                    const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+                    const userData = userDoc.exists() ? userDoc.data() : {};
 
-                setUser({
-                    ...currentUser,
-                    role: userData.role || 'user',
-                    gender: userData.gender
-                });
+                    setUser({
+                        ...currentUser,
+                        role: userData.role || 'user',
+                        gender: userData.gender
+                    });
+                } catch (err) {
+                    console.error("Firestore getDoc error:", err);
+                    // Critical: if Firestore fails due to API key restrictions or rules, 
+                    // we still want to log them in, or at least show the failure.
+                    // Instead of failing silently and hanging the login screen, we set default role.
+                    alert("Logged in, but failed to fetch user profile data from Firestore. Check console for details.");
+                    setUser({
+                        ...currentUser,
+                        role: 'user'
+                    });
+                }
             } else {
                 setUser(null);
             }
