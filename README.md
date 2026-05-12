@@ -1,4 +1,6 @@
-# Creatacourse.io - Project Documentation
+# Creatacourse.io
+
+> **[Read the Full Technical Documentation here](documentation.md)**
 
 ## 1. Overview
 **Creatacourse.io** is a gamified learning platform designed to let users create, manage, and consume structured courses. It transforms raw text content (like ChatGPT outputs) into interactive, phase-based learning experiences with progress tracking and gamification elements.
