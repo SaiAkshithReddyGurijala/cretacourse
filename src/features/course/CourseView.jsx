@@ -72,7 +72,7 @@ const CourseView = () => {
 
                     <div style={{
                         display: 'grid',
-                        gridTemplateColumns: '2fr 1fr',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
                         gap: 'var(--spacing-lg)',
                         alignItems: 'start',
                     }}>

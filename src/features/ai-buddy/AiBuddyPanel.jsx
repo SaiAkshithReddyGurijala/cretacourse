@@ -89,7 +89,7 @@ const AiBuddyPanel = ({ isOpen, onClose }) => {
             />
 
             {/* Panel */}
-            <div className="animate-slide-in-right" style={{
+            <div className="animate-slide-in-right ai-buddy-panel" style={{
                 position: 'fixed',
                 top: 0, right: 0, bottom: 0,
                 width: '420px',

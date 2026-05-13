@@ -55,7 +55,7 @@ const HomePage = () => {
             {/* ── Stats Cards ──────────────────────────────── */}
             <div className="stagger-children" style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(4, 1fr)',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
                 gap: 'var(--spacing-md)',
                 marginBottom: 'var(--spacing-2xl)',
             }}>

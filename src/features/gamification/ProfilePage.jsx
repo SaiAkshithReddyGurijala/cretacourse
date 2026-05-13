@@ -37,6 +37,7 @@ const ProfilePage = () => {
                 padding: 'var(--spacing-xl)',
                 marginBottom: 'var(--spacing-xl)',
                 display: 'flex', alignItems: 'center', gap: 'var(--spacing-xl)',
+                flexWrap: 'wrap',
             }}>
                 {/* Avatar / Level Circle */}
                 <div style={{ position: 'relative' }}>
@@ -115,7 +116,7 @@ const ProfilePage = () => {
             {/* ── Stats Grid ───────────────────────────────── */}
             <div className="stagger-children" style={{
                 display: 'grid',
-                gridTemplateColumns: 'repeat(4, 1fr)',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
                 gap: 'var(--spacing-md)',
                 marginBottom: 'var(--spacing-xl)',
             }}>

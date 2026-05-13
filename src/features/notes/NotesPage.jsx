@@ -39,15 +39,17 @@ const NotesPage = () => {
     return (
         <div className="animate-fade-in" style={{
             display: 'flex',
-            height: 'calc(100vh - 100px)',
+            flexWrap: 'wrap',
+            height: 'auto',
+            minHeight: 'calc(100vh - 100px)',
             gap: 'var(--spacing-md)',
             padding: 'var(--spacing-lg) 0',
         }}>
             {/* ── Notes Sidebar ────────────────────────────── */}
             <div className="panel" style={{
-                width: '280px', minWidth: '280px',
+                width: '280px', minWidth: '220px', flex: '0 1 280px',
                 display: 'flex', flexDirection: 'column',
-                overflow: 'hidden',
+                overflow: 'hidden', maxHeight: '70vh',
             }}>
                 <div style={{ padding: 'var(--spacing-md)' }}>
                     <button onClick={createNote} className="btn btn-primary" style={{
@@ -112,8 +114,8 @@ const NotesPage = () => {
 
             {/* ── Editor ───────────────────────────────────── */}
             <div className="panel" style={{
-                flex: 1, display: 'flex', flexDirection: 'column',
-                overflow: 'hidden',
+                flex: '1 1 300px', display: 'flex', flexDirection: 'column',
+                overflow: 'hidden', minHeight: '300px',
             }}>
                 {activeNote ? (
                     <>

@@ -65,7 +65,7 @@ const AdminDashboard = () => {
 
             {/* Stats */}
             <div className="stagger-children" style={{
-                display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
+                display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
                 gap: 'var(--spacing-md)', marginBottom: 'var(--spacing-xl)',
             }}>
                 <div className="stat-card">
@@ -98,7 +98,7 @@ const AdminDashboard = () => {
                     }} />
                 </div>
             ) : (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-lg)' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--spacing-lg)' }}>
                     {/* Users */}
                     <div className="panel" style={{ padding: 'var(--spacing-lg)' }}>
                         <div style={{

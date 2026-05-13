@@ -15,7 +15,7 @@ import HomePage from './features/home/HomePage';
 import IntroAnimation from './components/IntroAnimation';
 import XPToast from './components/XPToast';
 import AiBuddyPanel from './features/ai-buddy/AiBuddyPanel';
-import { Bot } from 'lucide-react';
+import { Bot, Menu, X } from 'lucide-react';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useAuth();
@@ -30,11 +30,70 @@ const ProtectedRoute = ({ children }) => {
 
 const AppLayout = () => {
   const [aiBuddyOpen, setAiBuddyOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+
+  // Close sidebar on route change (mobile)
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: 'var(--bg-primary)' }}>
-      <CourseSidebar />
-      <main style={{
+      {/* Mobile header */}
+      <header className="mobile-header" style={{
+        position: 'fixed',
+        top: 0, left: 0, right: 0,
+        height: '56px',
+        background: 'var(--bg-secondary)',
+        borderBottom: '1px solid var(--border-color)',
+        display: 'none', /* shown via CSS media query */
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 var(--spacing-md)',
+        zIndex: 'var(--z-sidebar)',
+      }}>
+        <button
+          onClick={() => setSidebarOpen(true)}
+          style={{ padding: '8px', color: 'var(--text-primary)' }}
+        >
+          <Menu size={22} />
+        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <img src="/logo.png" alt="Logo" style={{
+            width: '28px', height: '28px', borderRadius: '6px',
+          }} />
+          <span className="text-gradient text-display" style={{ fontSize: '1rem' }}>
+            Cretacourse
+          </span>
+        </div>
+        <div style={{ width: '38px' }} /> {/* Spacer for centering */}
+      </header>
+
+      {/* Sidebar backdrop (mobile) */}
+      {sidebarOpen && (
+        <div
+          className="sidebar-backdrop"
+          onClick={() => setSidebarOpen(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            background: 'rgba(0,0,0,0.5)',
+            backdropFilter: 'blur(4px)',
+            zIndex: 149,
+            display: 'none', /* shown via CSS */
+          }}
+        />
+      )}
+
+      {/* Sidebar */}
+      <CourseSidebar
+        isOpen={sidebarOpen}
+        onClose={() => setSidebarOpen(false)}
+      />
+
+      {/* Main content */}
+      <main className="main-content" style={{
         flex: 1,
         padding: 'var(--spacing-md)',
         overflowY: 'auto',
@@ -47,7 +106,7 @@ const AppLayout = () => {
         {/* AI Buddy FAB */}
         <button
           onClick={() => setAiBuddyOpen(true)}
-          className="animate-scale-in"
+          className="animate-scale-in ai-fab"
           style={{
             position: 'fixed',
             bottom: 'var(--spacing-xl)',

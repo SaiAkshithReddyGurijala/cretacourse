@@ -2,12 +2,12 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { COURSE_DATA } from '../../data/courses';
 import { useGamification } from '../gamification/GamificationContext';
-import { CheckCircle, PlusCircle, LogOut, Home, Trash2, BookOpen, Trophy, StickyNote, Settings, Bot, Flame } from 'lucide-react';
+import { CheckCircle, PlusCircle, LogOut, Home, Trash2, BookOpen, Trophy, StickyNote, Settings, Flame, X } from 'lucide-react';
 import { useAuth } from '../auth/AuthContext';
 import { useCourse } from './CourseContext';
 import { deleteCourse } from '../db/firestoreService';
 
-const CourseSidebar = () => {
+const CourseSidebar = ({ isOpen, onClose }) => {
   const { getPhaseProgress, xp, level, streak } = useGamification();
   const { logout, user } = useAuth();
   const { courses, activeCourse, switchCourse, refreshCourses } = useCourse();
@@ -21,40 +21,50 @@ const CourseSidebar = () => {
     }
   };
 
-  const xpForNextLevel = level * 100;
   const xpProgress = ((xp % 100) / 100) * 100;
 
   return (
-    <aside style={{
-      width: '280px',
-      minWidth: '280px',
-      height: '100vh',
-      position: 'sticky',
-      top: 0,
-      display: 'flex',
-      flexDirection: 'column',
-      overflow: 'hidden',
-      background: 'var(--bg-secondary)',
-      borderRight: '1px solid var(--border-color)',
-      zIndex: 'var(--z-sidebar)',
-    }}>
+    <aside
+      className={`app-sidebar ${isOpen ? 'open' : ''}`}
+      style={{
+        width: '280px',
+        minWidth: '280px',
+        height: '100vh',
+        position: 'sticky',
+        top: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+        background: 'var(--bg-secondary)',
+        borderRight: '1px solid var(--border-color)',
+        zIndex: 'var(--z-sidebar)',
+      }}
+    >
       {/* ── Logo + Course Switcher ─────────────────────────── */}
       <div style={{
         padding: 'var(--spacing-lg) var(--spacing-md) var(--spacing-md)',
         borderBottom: '1px solid var(--border-color)',
       }}>
-        {/* Logo */}
+        {/* Logo row */}
         <div style={{
-          display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           marginBottom: 'var(--spacing-md)',
         }}>
-          <img src="/logo.png" alt="Logo" style={{
-            width: '32px', height: '32px', objectFit: 'contain',
-            filter: 'drop-shadow(0 0 6px rgba(139, 92, 246, 0.3))',
-          }} />
-          <span className="text-gradient text-display" style={{ fontSize: '1.1rem', fontWeight: 700 }}>
-            Cretacourse
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-sm)' }}>
+            <img src="/logo.png" alt="Logo" style={{
+              width: '32px', height: '32px', objectFit: 'contain', borderRadius: '8px',
+              filter: 'drop-shadow(0 0 6px rgba(139, 92, 246, 0.3))',
+            }} />
+            <span className="text-gradient text-display" style={{ fontSize: '1.1rem', fontWeight: 700 }}>
+              Cretacourse
+            </span>
+          </div>
+          {/* Close button — only visible on mobile via CSS */}
+          <button className="sidebar-close-btn" onClick={onClose} style={{
+            display: 'none', padding: '4px', color: 'var(--text-muted)',
+          }}>
+            <X size={20} />
+          </button>
         </div>
 
         {/* Course switcher */}
@@ -114,6 +124,7 @@ const CourseSidebar = () => {
                 to={`/phase/${phase.id}`}
                 className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}
                 style={{ display: 'block', padding: '10px 12px' }}
+                onClick={onClose}
               >
                 <div style={{
                   display: 'flex', justifyContent: 'space-between',
@@ -196,21 +207,21 @@ const CourseSidebar = () => {
           </div>
         </div>
 
-        <NavLink to="/" end className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}>
+        <NavLink to="/" end className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`} onClick={onClose}>
           <Home size={16} /> <span>Home</span>
         </NavLink>
-        <NavLink to="/create" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}>
+        <NavLink to="/create" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`} onClick={onClose}>
           <PlusCircle size={16} /> <span>Create Course</span>
         </NavLink>
-        <NavLink to="/notes" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}>
+        <NavLink to="/notes" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`} onClick={onClose}>
           <StickyNote size={16} /> <span>Notes</span>
         </NavLink>
-        <NavLink to="/profile" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}>
+        <NavLink to="/profile" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`} onClick={onClose}>
           <Trophy size={16} /> <span>Profile</span>
         </NavLink>
 
         {user?.role === 'admin' && (
-          <NavLink to="/admin" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`}>
+          <NavLink to="/admin" className={({ isActive }) => `sidebar-item ${isActive ? 'active' : ''}`} onClick={onClose}>
             <Settings size={16} /> <span>Admin</span>
           </NavLink>
         )}

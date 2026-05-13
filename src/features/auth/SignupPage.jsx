@@ -228,7 +228,7 @@ const SignupPage = () => {
                         </div>
 
                         {/* Password row */}
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--spacing-md)' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 'var(--spacing-md)' }}>
                             <div>
                                 <label className="input-label">Password</label>
                                 <div style={{ position: 'relative' }}>
@@ -314,7 +314,7 @@ const SignupPage = () => {
                             <label className="input-label">Gender</label>
                             <div style={{
                                 display: 'grid',
-                                gridTemplateColumns: 'repeat(4, 1fr)',
+                                gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
                                 gap: 'var(--spacing-xs)',
                             }}>
                                 {genderOptions.map(opt => (
