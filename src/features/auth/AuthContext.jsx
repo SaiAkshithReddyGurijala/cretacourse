@@ -2,12 +2,13 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
+    signInWithPopup,
     signOut,
     onAuthStateChanged,
     sendEmailVerification,
     updateProfile
 } from 'firebase/auth';
-import { auth, db } from '../../lib/firebase';
+import { auth, db, googleProvider } from '../../lib/firebase';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 const AuthContext = createContext();
@@ -83,6 +84,33 @@ export const AuthProvider = ({ children }) => {
         return signInWithEmailAndPassword(auth, email, password);
     };
 
+    const loginWithGoogle = async () => {
+        try {
+            const result = await signInWithPopup(auth, googleProvider);
+            const user = result.user;
+
+            // Check if user doc already exists in Firestore
+            const userDocRef = doc(db, 'users', user.uid);
+            const userDoc = await getDoc(userDocRef);
+
+            if (!userDoc.exists()) {
+                // First time Google login — create the Firestore user doc
+                await setDoc(userDocRef, {
+                    username: user.displayName || 'User',
+                    email: user.email,
+                    gender: 'prefer-not-to-say',
+                    role: 'user',
+                    createdAt: new Date().toISOString(),
+                    authProvider: 'google'
+                });
+            }
+
+            return user;
+        } catch (error) {
+            throw error;
+        }
+    };
+
     const logout = () => {
         return signOut(auth);
     };
@@ -91,6 +119,7 @@ export const AuthProvider = ({ children }) => {
         <AuthContext.Provider value={{
             user,
             login,
+            loginWithGoogle,
             signup,
             logout,
             isAuthenticated: !!user,

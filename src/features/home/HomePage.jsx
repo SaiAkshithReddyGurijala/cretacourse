@@ -17,10 +17,10 @@ const HomePage = () => {
         return <div style={{ padding: '40px', color: 'var(--text-muted)' }}>Error: Course Context Missing</div>;
     }
 
-    const { courses, refreshCourses, loading } = courseContext;
+    const { courses, refreshCourses, loading, switchCourse } = courseContext;
 
     const handleCourseClick = (course) => {
-        localStorage.setItem('active_course_id', course.id);
+        switchCourse(course.id);
         if (course.phases && course.phases.length > 0) {
             navigate(`/phase/${course.phases[0].id}`);
         }
