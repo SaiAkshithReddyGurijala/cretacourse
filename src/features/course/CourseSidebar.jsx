@@ -53,7 +53,7 @@ const CourseSidebar = () => {
             filter: 'drop-shadow(0 0 6px rgba(139, 92, 246, 0.3))',
           }} />
           <span className="text-gradient text-display" style={{ fontSize: '1.1rem', fontWeight: 700 }}>
-            Creatacourse
+            Cretacourse
           </span>
         </div>
 

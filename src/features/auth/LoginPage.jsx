@@ -81,7 +81,7 @@ const LoginPage = () => {
                 <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-xl)' }}>
                     <img
                         src="/logo.png"
-                        alt="Creatacourse"
+                        alt="Cretacourse"
                         style={{
                             width: '64px',
                             height: '64px',

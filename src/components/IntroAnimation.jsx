@@ -117,7 +117,7 @@ const IntroAnimation = ({ onComplete }) => {
                 }}>
                     <img
                         src="/logo.png"
-                        alt="Creatacourse"
+                        alt="Cretacourse"
                         style={{
                             width: '100%', height: '100%',
                             objectFit: 'cover',
@@ -140,7 +140,7 @@ const IntroAnimation = ({ onComplete }) => {
                     marginBottom: '1rem',
                     textTransform: 'uppercase',
                 }}>
-                    Creatacourse
+                    Cretacourse
                 </h1>
 
                 {/* Divider line */}

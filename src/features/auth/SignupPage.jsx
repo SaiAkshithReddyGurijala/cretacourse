@@ -118,7 +118,7 @@ const SignupPage = () => {
                 <div style={{ textAlign: 'center', marginBottom: 'var(--spacing-xl)' }}>
                     <img
                         src="/logo.png"
-                        alt="Creatacourse"
+                        alt="Cretacourse"
                         style={{
                             width: '56px', height: '56px',
                             objectFit: 'contain',
